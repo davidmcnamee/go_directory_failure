@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@aspect_bazel_lib//lib:run_binary.bzl", "run_binary")
+
+genrule(
+    name = "generate",
+    outs = ["gen"],
+    srcs = ["mydir"],
+    cmd = "cp -r $(location mydir) $@",
+)
+
+go_binary(
+    name = "main",
+    srcs = ["main.go", ":generate"],
+)
